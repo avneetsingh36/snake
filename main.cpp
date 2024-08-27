@@ -1,11 +1,26 @@
 #include <raylib.h>
+
+#include <deque>
 #include <iostream>
 
-Color darkPurple = {165, 148, 249, 255};
+Color darkGrey = {51, 51, 51, 255};
 Color purple = {205, 193, 255, 255};
 
 int cellSize = 30;
 int cellCount = 25;
+
+class Snake {
+ public:
+  std::deque<Vector2> body = {Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}};
+
+  void Draw() {
+    for (int i = 0; i < body.size(); i++) {
+      int x = body[i].x;
+      int y = body[i].y;
+      DrawRectangle(x * cellSize, y * cellSize, cellSize, cellSize, darkGrey);
+    }
+  }
+};
 
 class Food {
  public:
@@ -13,7 +28,7 @@ class Food {
   Texture2D texture;
 
   Food() {
-    Image image = LoadImage("graphics/food.png");
+    Image image = LoadImage("graphic/food.png");
     texture = LoadTextureFromImage(image);
     UnloadImage(image);
     position = GenerateRandomPos();
@@ -38,6 +53,7 @@ int main() {
   InitWindow(cellSize * cellCount, cellSize * cellCount, "Snake");
   SetTargetFPS(60);
   Food food = Food();
+  Snake snake = Snake();
 
   while (WindowShouldClose() == false) {
     BeginDrawing();
@@ -46,6 +62,7 @@ int main() {
     ClearBackground(purple);
 
     food.Draw();
+    snake.Draw();
 
     EndDrawing();
   }
