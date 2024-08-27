@@ -1,5 +1,4 @@
 #include <raylib.h>
-
 #include <iostream>
 
 Color darkPurple = {165, 148, 249, 255};
