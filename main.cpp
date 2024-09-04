@@ -45,7 +45,6 @@ class Snake {
     body.pop_back();
     body.push_front(Vector2Add(body[0], direction));
   }
-
 };
 
 class Food {
@@ -73,20 +72,17 @@ class Food {
   }
 };
 
-class Game
-{
-public:
-    Snake snake = Snake();
-    Food food = Food();
+class Game {
+ public:
+  Snake snake = Snake();
+  Food food = Food();
 
-    void Draw() {
-        snake.Draw();
-        food.Draw();
-    }
+  void Draw() {
+    snake.Draw();
+    food.Draw();
+  }
 
-    void Update() {
-        snake.Update();
-    }
+  void Update() { snake.Update(); }
 };
 
 int main() {
