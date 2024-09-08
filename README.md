@@ -1,6 +1,6 @@
-# Snake Game
+# Lightning Snake Game
 
-A simple Snake Game implemented in C++ using the **Raylib** graphics library.
+A fast-paced version of the classic Snake Game, implemented using C++20 standards and the **Raylib** graphics library.
 
 <img src="./assets/screenshot.png" alt="Snake Game Screenshot" width="600"/>
 
