@@ -62,6 +62,11 @@ class Snake {
       body.push_front(Vector2Add(body[0], direction));
     }
   }
+
+  void Reset() {
+    body = {Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}};
+    direction = {1, 0};
+  }
 };
 
 class Food {
@@ -102,6 +107,7 @@ class Game {
  public:
   Snake snake = Snake();
   Food food = Food(snake.body);
+  bool running = true;
 
   void Draw() {
     snake.Draw();
@@ -109,8 +115,12 @@ class Game {
   }
 
   void Update() {
-    CheckCollisionsWithFood();
-    snake.Update();
+    if (running) {
+      CheckCollisionsWithFood();
+      CheckCollisionsWithEdges();
+      CheckCollisionsWithHead();
+      snake.Update();
+    }
   }
 
   void CheckCollisionsWithFood() {
@@ -119,6 +129,33 @@ class Game {
 
       food.position = food.GenerateRandomPos(snake.body);
     }
+  }
+
+  void CheckCollisionsWithEdges() {
+    if (snake.body[0].x == cellCount || snake.body[0].x == -1) {
+      GameOver();
+    }
+    if (snake.body[0].y == cellCount || snake.body[0].y == -1) {
+      GameOver();
+    }
+  }
+
+  void CheckCollisionsWithHead() {
+    std::deque<Vector2> headlessBody = snake.body;
+    Vector2 head = headlessBody[0];
+    headlessBody.pop_front();
+
+    for (int i = 0; i < headlessBody.size(); i++) {
+      if (Vector2Equals(head, headlessBody[i])) {
+        GameOver();
+      }
+    }
+  }
+
+  void GameOver() {
+    snake.Reset();
+    food.position = food.GenerateRandomPos(snake.body);
+    running = false;
   }
 };
 
@@ -139,17 +176,21 @@ int main() {
 
     if (IsKeyPressed(KEY_UP) && game.snake.direction.y != 1) {
       game.snake.direction = {0, -1};
+      game.running = true;
     }
 
     if (IsKeyPressed(KEY_DOWN) && game.snake.direction.y != -1) {
       game.snake.direction = {0, 1};
+      game.running = true;
     }
 
     if (IsKeyPressed(KEY_LEFT) && game.snake.direction.x != 1) {
       game.snake.direction = {-1, 0};
+      game.running = true;
     }
     if (IsKeyPressed(KEY_RIGHT) && game.snake.direction.x != -1) {
       game.snake.direction = {1, 0};
+      game.running = true;
     }
     // Draw
     ClearBackground(purple);
