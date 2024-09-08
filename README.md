@@ -2,7 +2,7 @@
 
 A simple Snake Game implemented in C++ using the **Raylib** graphics library.
 
-![Snake Game Screenshot](./assets/screenshot.png)
+<img src="./assets/screenshot.png" alt="Snake Game Screenshot" width="400"/>
 
 ## How to Play
 - **Movement**: Use the arrow keys to move the snake up, down, left, or right.
