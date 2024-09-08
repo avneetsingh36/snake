@@ -1,6 +1,7 @@
 # Lightning Snake Game
 
-A fast-paced version of the classic Snake Game, implemented using C++20 standards and the **Raylib** graphics library.
+Experience a fast-paced twist on the classic Snake Game, built using modern C++20 standards and the **Raylib** graphics library. This implementation focuses on delivering a smooth and responsive gameplay experience with enhanced speed and intuitive controls. Perfect for players looking for a quick, engaging challenge.
+
 
 <img src="./assets/screenshot.png" alt="Snake Game Screenshot" width="600"/>
 
