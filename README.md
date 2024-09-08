@@ -38,7 +38,16 @@ Alternatively, you can use the precompiled executable available in the repositor
 
 
 ## Project Structure
+
 - `main.cpp`: Contains the entire game logic including the snake movement, food generation, and game state handling.
+- `raylib_HW.cpp`: A starter file to ensure that your Raylib setup is working correctly. It's a basic "Hello World" style program for testing graphics.
+- `snake_game_executable`: The precompiled executable file to run the game directly.
+- `README.md`: The project's README file containing instructions and documentation.
+- `assets/`: Contains game assets like images and textures.
+  - `screenshot.png`: Screenshot of the game.
+- `graphic/`: Stores graphic resources.
+  - `food.png`: Image used for food in the game.
+
 
 ## License
 This project is licensed under the MIT License.
