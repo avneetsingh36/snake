@@ -1,6 +1,5 @@
 #include <raylib.h>
 #include <raymath.h>
-
 #include <deque>
 #include <iostream>
 
@@ -9,7 +8,7 @@ Color purple = {205, 193, 255, 255};
 
 int cellSize = 30;
 int cellCount = 25;
-
+int offset = 75;
 double lastUpdateTime = 0;
 
 bool ElementInDeque(Vector2 element, std::deque<Vector2> deque) {
@@ -45,9 +44,10 @@ class Snake {
       float x = static_cast<float>(body[i].x);
       float y = static_cast<float>(body[i].y);
 
-      Rectangle segment = Rectangle{
-          x * static_cast<float>(cellSize), y * static_cast<float>(cellSize),
-          static_cast<float>(cellSize), static_cast<float>(cellSize)};
+      Rectangle segment =
+          Rectangle{offset + x * static_cast<float>(cellSize),
+                    offset + y * static_cast<float>(cellSize),
+                    static_cast<float>(cellSize), static_cast<float>(cellSize)};
 
       DrawRectangleRounded(segment, 0.5f, 6, darkGrey);
     }
@@ -84,7 +84,8 @@ class Food {
   ~Food() { UnloadTexture(texture); }
 
   void Draw() {
-    DrawTexture(texture, position.x * cellSize, position.y * cellSize, WHITE);
+    DrawTexture(texture, offset + position.x * cellSize,
+                offset + position.y * cellSize, WHITE);
   }
 
   Vector2 GenerateRandomCell() {
@@ -108,6 +109,7 @@ class Game {
   Snake snake = Snake();
   Food food = Food(snake.body);
   bool running = true;
+  int score = 0;
 
   void Draw() {
     snake.Draw();
@@ -116,19 +118,20 @@ class Game {
 
   void Update() {
     if (running) {
+      snake.Update();
       CheckCollisionsWithFood();
       CheckCollisionsWithEdges();
       CheckCollisionsWithHead();
-      snake.Update();
     }
   }
 
   void CheckCollisionsWithFood() {
     if (Vector2Equals(snake.body[0], food.position)) {
       snake.addSegment = true;
-
       food.position = food.GenerateRandomPos(snake.body);
+      score++;
     }
+
   }
 
   void CheckCollisionsWithEdges() {
@@ -154,6 +157,7 @@ class Game {
 
   void GameOver() {
     snake.Reset();
+    score = 0;
     food.position = food.GenerateRandomPos(snake.body);
     running = false;
   }
@@ -162,15 +166,15 @@ class Game {
 int main() {
   std::cout << "Starting the game... " << '\n';
 
-  InitWindow(cellSize * cellCount, cellSize * cellCount, "Snake");
+  InitWindow(2 * offset + cellSize * cellCount,
+             2 * offset + cellSize * cellCount, "Snake");
   SetTargetFPS(60);
-
   Game game = Game();
 
   while (WindowShouldClose() == false) {
     BeginDrawing();
 
-    if (eventTriggered(0.2)) {
+    if (eventTriggered(0.125)) {
       game.Update();
     }
 
@@ -194,9 +198,13 @@ int main() {
     }
     // Draw
     ClearBackground(purple);
-
+    DrawText("Snake Game", offset - 5, 20, 40, darkGrey);
+    DrawText(TextFormat("%i", game.score), 60 + cellSize*cellCount, 20, 40, darkGrey);
     game.Draw();
-
+    DrawRectangleLinesEx(Rectangle{(float)offset - 5, (float)offset - 5,
+                                   (float)cellSize * cellCount + 10,
+                                   (float)cellSize * cellCount + 10},
+                         5, darkGrey);
     EndDrawing();
   }
 
