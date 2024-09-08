@@ -21,6 +21,22 @@ A simple Snake Game implemented in C++ using the **Raylib** graphics library.
 - **Left Arrow**: Move left
 - **Right Arrow**: Move right
 
+## Installation
+
+To compile and run the game, follow these steps:
+
+##### Install Raylib:
+```brew install raylib ```
+
+##### Compile the game (for mac - make sure to use the equivalent if on other operating systems):
+```g++ -std=c++20 -o main main.cpp -I/opt/homebrew/include -L/opt/homebrew/lib -lraylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo ```
+
+##### Run the game:
+```./main```
+
+Alternatively, you can use the precompiled executable available in the repository. Just download it and run: ```.\snake_game_executable```
+
+
 ## Project Structure
 - `main.cpp`: Contains the entire game logic including the snake movement, food generation, and game state handling.
 
